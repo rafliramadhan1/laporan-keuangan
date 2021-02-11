@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'qi5i24e4h52*c*!^zatn$brlvr4$9#3q+d*j6xbrn*7n#hj5vg'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["glacial-coast-08306.herokuapp.com", "127.0.0.1"]
 
