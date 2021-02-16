@@ -12,13 +12,16 @@ class StaffUser(views.APIView):
     def post(self, request):
         username = request.data.get("username")
         password = request.data.get("password")
+        first_name = request.data.get("first name")
+        last_name = request.data.get("last name")
         if username in [user.username for user in User.objects.all()]:
             return Response({"detail": "username already taken"})
         else:
             user = User.objects.create_user(
                 username=username,
                 password=password,
-                is_staff=True,
+                first_name=first_name,
+                last_name=last_name
             )
             user.save()
             return Response({"detail": "User successfully created"}, status=status.HTTP_201_CREATED)
