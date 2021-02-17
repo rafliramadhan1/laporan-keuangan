@@ -3,7 +3,7 @@ from rest_framework import generics, views, status
 from rest_framework.response import Response
 from apps.administration.models import Administration
 from apps.administration.serializers import AdministrationSerializer
-from apps.administration.utils import get_all_administration_data
+from apps.administration.utils import get_all_administration_data, get_administration_detail
 
 
 class AddAdministration(views.APIView):
@@ -81,3 +81,25 @@ class MonthlyIncomeOutcomeProfitAdministration(views.APIView):
 
     def get(self, request):
         return Response(get_all_administration_data(request.user.username)[int(request.data.get("year"))])
+
+
+class GetAdministrationDetail(views.APIView):
+
+    def get(self, request):
+        administration_detail = {}
+        year = request.data.get("year")
+        month = request.data.get("month")
+        for administration_id in get_administration_detail(request.user.username)[int([year][month])]:
+            obj = Administration.objects.get(id=administration_id)
+            administration_detail[administration_id] = {}
+            administration_detail[administration_id]["tipe"] = obj.tipe
+            administration_detail[administration_id]["nominal"] = obj.nominal
+            administration_detail[administration_id]["deskripsi"] = obj.deskripsi
+            if len(obj.bukti.name) == 0:
+                administration_detail[administration_id]["bukti"] = "None"
+            else:
+                administration_detail[administration_id]["bukti"] = obj.bukti.url
+            administration_detail[administration_id]["created_at"] = f"{obj.created_at.year}-" \
+                                                                     f"{obj.created_at.month}-" \
+                                                                     f"{obj.created_at.day}"
+        return Response(administration_detail)

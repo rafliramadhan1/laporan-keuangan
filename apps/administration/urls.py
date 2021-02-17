@@ -6,6 +6,7 @@ from .views import (
     DeleteAdministration,
     YearlyIncomeOutcomeProfitAdministration,
     MonthlyIncomeOutcomeProfitAdministration,
+    GetAdministrationDetail
 )
 
 app_name = "administration"
@@ -25,4 +26,5 @@ urlpatterns = [
         MonthlyIncomeOutcomeProfitAdministration.as_view(),
         name='administrationdatapermonth'
     ),
+    path('administrationdetail/', GetAdministrationDetail.as_view(), name='administrationdetail')
 ]
