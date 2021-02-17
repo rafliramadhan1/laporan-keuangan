@@ -89,7 +89,7 @@ class GetAdministrationDetail(views.APIView):
         administration_detail = {}
         year = request.data.get("year")
         month = request.data.get("month")
-        for administration_id in get_administration_detail(request.user.username)[int([year][month])]:
+        for administration_id in get_administration_detail(request.user.username)[int(year)][int(month)]:
             obj = Administration.objects.get(id=administration_id)
             administration_detail[administration_id] = {}
             administration_detail[administration_id]["tipe"] = obj.tipe
