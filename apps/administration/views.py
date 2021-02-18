@@ -80,15 +80,15 @@ class YearlyIncomeOutcomeProfitAdministration(views.APIView):
 class MonthlyIncomeOutcomeProfitAdministration(views.APIView):
 
     def get(self, request):
-        return Response(get_all_administration_data(request.user.username)[int(request.data.get("year"))])
+        return Response(get_all_administration_data(request.user.username)[int(request.GET.get("year"))])
 
 
 class GetAdministrationDetail(views.APIView):
 
     def get(self, request):
         administration_detail = {}
-        year = request.data.get("year")
-        month = request.data.get("month")
+        year = request.GET.get("year")
+        month = request.GET.get("month")
         for administration_id in get_administration_detail(request.user.username)[int(year)][int(month)]:
             obj = Administration.objects.get(id=administration_id)
             administration_detail[administration_id] = {}
