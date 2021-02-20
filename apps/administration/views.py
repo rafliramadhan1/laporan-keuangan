@@ -62,7 +62,7 @@ class UpdateAdministration(views.APIView):
 class DeleteAdministration(views.APIView):
 
     def delete(self, request):
-        administration_id = request.data.get("administration_id")
+        administration_id = request.GET.get("administration_id")
         if Administration.objects.get(id=administration_id).username == request.user.username:
             administration = Administration.objects.get(id=administration_id)
             Administration.delete(administration)
