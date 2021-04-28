@@ -14,7 +14,7 @@ app_name = "administration"
 urlpatterns = [
     path('addadministration/', AddAdministration.as_view(), name='addadministration'),
     path('listadministration/', ListAdministration.as_view(), name='listadministration'),
-    path('updateadministration/', UpdateAdministration.as_view(), name='updateadministration'),
+    path('updateadministration/<int:pk>/', UpdateAdministration.as_view(), name='updateadministration'),
     path('deleteadministration/', DeleteAdministration.as_view(), name='deleteadministration'),
     path(
         'administrationdataperyear/',

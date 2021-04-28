@@ -58,6 +58,10 @@ class UpdateAdministration(views.APIView):
         else:
             return Response({"detail": "Unauthorized request"}, status=status.HTTP_401_UNAUTHORIZED)
 
+# class UpdateAdministration(generics.UpdateAPIView):
+#     queryset = Administration.objects.all()
+#     serializer_class = AdministrationSerializer
+
 
 class DeleteAdministration(views.APIView):
 
@@ -89,17 +93,22 @@ class GetAdministrationDetail(views.APIView):
         administration_detail = {}
         year = request.GET.get("year")
         month = request.GET.get("month")
-        for administration_id in get_administration_detail(request.user.username)[int(year)][int(month)]:
-            obj = Administration.objects.get(id=administration_id)
-            administration_detail[administration_id] = {}
-            administration_detail[administration_id]["tipe"] = obj.tipe
-            administration_detail[administration_id]["nominal"] = obj.nominal
-            administration_detail[administration_id]["deskripsi"] = obj.deskripsi
+        data = {}
+        for administration_id in get_administration_detail("rafli")[2021][2]:
+            data[administration_id] = Administration.objects.get(id=administration_id).created_at.day
+
+        sorted_data = {k: v for k, v in sorted(data.items(), key=lambda item: item[1])}
+        for x in sorted_data:
+            obj = Administration.objects.get(id=x)
+            administration_detail[x] = {}
+            administration_detail[x]["tipe"] = obj.tipe
+            administration_detail[x]["nominal"] = obj.nominal
+            administration_detail[x]["deskripsi"] = obj.deskripsi
             if len(obj.bukti.name) == 0:
-                administration_detail[administration_id]["bukti"] = "None"
+                administration_detail[x]["bukti"] = "None"
             else:
-                administration_detail[administration_id]["bukti"] = obj.bukti.url
-            administration_detail[administration_id]["created_at"] = f"{obj.created_at.year}-" \
+                administration_detail[x]["bukti"] = obj.bukti.url
+            administration_detail[x]["created_at"] = f"{obj.created_at.year}-" \
                                                                      f"{obj.created_at.month}-" \
-                                                                     f"{obj.created_at.day}"
+                                                             f"{obj.created_at.day}"
         return Response(administration_detail)

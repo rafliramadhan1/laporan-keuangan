@@ -6,18 +6,18 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 
 
-class StaffUser(views.APIView):
+class RegisterUser(views.APIView):
     permission_classes = [AllowAny, ]
 
     def post(self, request):
         username = request.data.get("username")
         password = request.data.get("password")
-        first_name = request.data.get("first name")
-        last_name = request.data.get("last name")
+        first_name = request.data.get("first_name")
+        last_name = request.data.get("last_name")
         if username in [user.username for user in User.objects.all()]:
             return Response({"detail": "username already taken"})
         else:
-            user = User.objects.create_user(
+            user = User.objects.create(
                 username=username,
                 password=password,
                 first_name=first_name,

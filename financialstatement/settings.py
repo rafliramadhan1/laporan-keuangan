@@ -28,7 +28,7 @@ SECRET_KEY = 'qi5i24e4h52*c*!^zatn$brlvr4$9#3q+d*j6xbrn*7n#hj5vg'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["glacial-coast-08306.herokuapp.com", "127.0.0.1"]
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -102,12 +102,8 @@ WSGI_APPLICATION = 'financialstatement.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'd66etv4td93akc',
-        'HOST': 'ec2-34-239-33-57.compute-1.amazonaws.com',
-        'PORT': 5432,
-        'USER': 'trulbzordvetbc',
-        'PASSWORD': 'e9e3ff937797ea0961c06fd08657b7c8d12cab6464f54cefa230758bd0eb927a'
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
